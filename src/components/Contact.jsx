@@ -26,7 +26,7 @@ export default function Contact() {
 
               {/* PUT YOUR IMAGE HERE */}
               <img
-                src="public/1f6e6227-fe42-42e7-90ba-bf96fea47057_128.jpeg"
+                src="/1f6e6227-fe42-42e7-90ba-bf96fea47057_128.jpeg"
                 alt="Henry's Profile picture"
                 className="profile-image"
               />

@@ -9,19 +9,19 @@ export default function Projects() {
   const projects = [
     {
       title: "Brand Design",
-      image: "public/Travel flyer 1.0.jpg",
+      image: "/Travel-flyer-1.0.jpg",
     },
     {
       title: "Logo Collection",
-      image: "public/TRAVEL FLYER 144.jpg",
+      image: "/TRAVEL-FLYER144.jpg",
     },
     {
       title: "Poster Design",
-      image: "public/home decoration.jpg",
+      image: "/home-decoration.jpg",
     },
     {
       title: "UI Mockup",
-      image: "public/potographu123.png",
+      image: "/potographu123.png",
     },
   ];
 
