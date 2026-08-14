@@ -1,10 +1,43 @@
-// Contact.jsx
-
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
 import "./Contact.css";
 
 export default function Contact() {
+  const [settings, setSettings] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/settings`
+        );
+
+        const data = await response.json();
+
+        if (response.ok) {
+          setSettings(data.settings);
+        }
+      } catch (error) {
+        console.error("Failed to fetch contact settings:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSettings();
+  }, []);
+
+  if (loading) {
+    return (
+      <div id="contact" className="contact-section">
+        <Container>
+          <p className="text-center">Loading contact information...</p>
+        </Container>
+      </div>
+    );
+  }
+
   return (
     <div id="contact" className="contact-section">
       <Container>
@@ -24,12 +57,15 @@ export default function Contact() {
 
             <Card className="profile-card">
 
-              {/* PUT YOUR IMAGE HERE */}
-              <img
-                src="/1f6e6227-fe42-42e7-90ba-bf96fea47057_128.jpeg"
-                alt="Henry's Profile picture"
-                className="profile-image"
-              />
+             <img
+              src={
+                settings?.profile_image
+                  ? `${import.meta.env.VITE_API_URL}/uploads/${settings.profile_image}`
+                  : "/1f6e6227-fe42-42e7-90ba-bf96fea47057_128.jpeg"
+              }
+              alt="Henry's Profile picture"
+              className="profile-image"
+            />
 
               <Card.Body>
                 <h3>Henry Silas</h3>
@@ -37,44 +73,138 @@ export default function Contact() {
                 <p>
                   Graphic Designer • Web Developer • Professional Typist
                 </p>
+
+                {settings?.location && (
+                  <p>
+                    📍 {settings.location}
+                  </p>
+                )}
               </Card.Body>
 
             </Card>
 
           </Col>
 
-          {/* CONTACT FORM */}
+          {/* CONTACT SIDE */}
           <Col lg={7}>
 
-            <Form className="contact-form">
+            <div className="contact-form">
 
-              <Form.Group className="mb-4">
-                <Form.Control
-                  type="text"
-                  placeholder="Your Name"
-                />
-              </Form.Group>
+              <h3 className="mb-4">
+                Get In Touch
+              </h3>
 
-              <Form.Group className="mb-4">
-                <Form.Control
-                  type="email"
-                  placeholder="Your Email"
-                />
-              </Form.Group>
+              {settings?.whatsapp && (
+                <p>
+                  <strong>WhatsApp:</strong>{" "}
+                  <a
+                    href={`https://wa.me/${settings.whatsapp.replace(
+                      /\D/g,
+                      ""
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {settings.whatsapp}
+                  </a>
+                </p>
+              )}
 
-              <Form.Group className="mb-4">
-                <Form.Control
-                  as="textarea"
-                  rows={5}
-                  placeholder="Your Message"
-                />
-              </Form.Group>
+              {settings?.email && (
+                <p>
+                  <strong>Email:</strong>{" "}
+                  <a href={`mailto:${settings.email}`}>
+                    {settings.email}
+                  </a>
+                </p>
+              )}
 
-              <Button className="send-btn">
-                Send Message
-              </Button>
+              {settings?.phone && (
+                <p>
+                  <strong>Phone:</strong>{" "}
+                  <a href={`tel:${settings.phone}`}>
+                    {settings.phone}
+                  </a>
+                </p>
+              )}
 
-            </Form>
+              <div className="contact-social-links">
+
+                {settings?.github && (
+                  <a
+                    href={settings.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    GitHub
+                  </a>
+                )}
+
+                {settings?.linkedin && (
+                  <a
+                    href={settings.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    LinkedIn
+                  </a>
+                )}
+
+                {settings?.instagram && (
+                  <a
+                    href={settings.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Instagram
+                  </a>
+                )}
+
+                {settings?.facebook && (
+                  <a
+                    href={settings.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Facebook
+                  </a>
+                )}
+
+              </div>
+
+              <hr />
+
+              <Form>
+
+                <Form.Group className="mb-4">
+                  <Form.Control
+                    type="text"
+                    placeholder="Your Name"
+                  />
+                </Form.Group>
+
+                <Form.Group className="mb-4">
+                  <Form.Control
+                    type="email"
+                    placeholder="Your Email"
+                  />
+                </Form.Group>
+
+                <Form.Group className="mb-4">
+                  <Form.Control
+                    as="textarea"
+                    rows={5}
+                    placeholder="Your Message"
+                  />
+                </Form.Group>
+
+                <Button className="send-btn">
+                  Send Message
+                </Button>
+
+              </Form>
+
+            </div>
 
           </Col>
 

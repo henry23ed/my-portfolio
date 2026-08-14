@@ -1,84 +1,135 @@
-/* Contact.css */
+/* =========================
+   CONTACT SECTION
+========================= */
 
 .contact-section {
   min-height: 100vh;
-  background: #020617;
-  color: white;
+  background: var(--bg-main);
+  color: var(--text-main);
   padding: 80px 0;
 }
 
+
+/* =========================
+   TITLES
+========================= */
+
 .contact-title {
   font-size: 3rem;
-  font-weight: bold;
+  font-weight: 700;
+  color: var(--text-main);
 }
 
 .contact-subtitle {
-  color: #cbd5e1;
+  color: var(--text-muted);
   margin-top: 10px;
 }
 
-/* PROFILE CARD */
+
+/* =========================
+   PROFILE CARD
+========================= */
+
 .profile-card {
-  background: rgba(255, 255, 255, 0.06);
-  border: none;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
   border-radius: 24px;
   overflow: hidden;
   text-align: center;
+
   backdrop-filter: blur(10px);
-  color: white;
-  transition: 0.3s ease;
+  -webkit-backdrop-filter: blur(10px);
+
+  color: var(--text-main);
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .profile-card:hover {
   transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(197, 168, 90, 0.12);
 }
 
-/* PROFILE IMAGE */
+
+/* =========================
+   PROFILE IMAGE
+========================= */
+
 .profile-image {
   width: 100%;
   height: 420px;
   object-fit: cover;
 }
 
-/* FORM */
+
+/* =========================
+   CONTACT FORM
+========================= */
+
 .contact-form {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
   padding: 35px;
   border-radius: 24px;
+
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
-/* INPUTS */
+
+/* =========================
+   INPUTS
+========================= */
+
 .contact-form .form-control {
-  background: rgba(255, 255, 255, 0.08);
-  border: none;
-  color: white;
+  background: var(--bg-dark);
+  border: 1px solid var(--border);
+  color: var(--text-main);
+
   padding: 14px;
   border-radius: 14px;
+  transition: 0.25s ease;
 }
 
 .contact-form .form-control::placeholder {
-  color: #cbd5e1;
+  color: var(--text-muted);
 }
 
 .contact-form .form-control:focus {
-  background: rgba(255, 255, 255, 0.12);
-  color: white;
-  box-shadow: none;
+  background: var(--bg-dark);
+  color: var(--text-main);
+
+  border-color: var(--gold);
+
+  box-shadow: 0 0 0 3px rgba(197, 168, 90, 0.1);
 }
 
-/* BUTTON */
+
+/* =========================
+   SEND BUTTON
+========================= */
+
 .send-btn {
   width: 100%;
   padding: 14px;
+
   border: none;
   border-radius: 14px;
-  background: white;
-  color: #020617;
-  font-weight: bold;
-  transition: 0.3s ease;
+
+  background: var(--gold);
+  color: var(--bg-dark);
+
+  font-weight: 700;
+
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease;
 }
 
 .send-btn:hover {
-  transform: scale(1.02);
+  background: var(--accent);
+  color: var(--text-main);
+  transform: translateY(-2px);
 }

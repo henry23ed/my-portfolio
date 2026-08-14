@@ -1,8 +1,5 @@
-// MovingCards.jsx
-// React + React Bootstrap Portfolio Landing Page
-
-import React from "react";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Container, Card, Button } from "react-bootstrap";
 import "./MovingCards.css";
 
 export default function MovingCards() {
@@ -21,36 +18,72 @@ export default function MovingCards() {
     },
   ];
 
+  const [currentCard, setCurrentCard] = useState(0);
+  const [animating, setAnimating] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setAnimating(true);
+
+      setTimeout(() => {
+        setCurrentCard((prev) =>
+          prev === cards.length - 1 ? 0 : prev + 1
+        );
+
+        setAnimating(false);
+      }, 350);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [cards.length]);
+
+  const card = cards[currentCard];
+
   return (
-    <div id='home' className="hero-section ">
-      <Container className='mt-5'> 
+    <div id="MovingCards" className="hero-section">
+      <Container className="mt-5">
+
         <div className="text-center hero-content">
-          <h1 className="main-title ">My Portfolio</h1>
+
+          <h1 className="main-title">
+            My Portfolio
+          </h1>
+
           <p className="subtitle">
             Creative Designer • Web Developer • Professional Typist
           </p>
 
-          <Button variant="light" className="explore-btn">
+          <Button
+            variant="light"
+            className="explore-btn"
+            href="#projects"
+          >
             Explore My Work
           </Button>
+
         </div>
 
-        <Row className="mt-5 g-4 justify-content-center">
-          {cards.map((card, index) => (
-            <Col md={4} key={index}>
-              <Card className="moving-card">
-                <Card.Body>
-                  <Card.Title>{card.title}</Card.Title>
-                  <Card.Text>{card.text}</Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-        </Row>
+        <div className="moving-card-wrapper">
+
+          <Card
+            className={`moving-card ${
+              animating ? "card-exit" : "card-enter"
+            }`}
+          >
+            <Card.Body>
+              <Card.Title>
+                {card.title}
+              </Card.Title>
+
+              <Card.Text>
+                {card.text}
+              </Card.Text>
+            </Card.Body>
+          </Card>
+
+        </div>
+
       </Container>
     </div>
   );
 }
-
-
-//export default MovingCards;

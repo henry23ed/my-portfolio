@@ -1,0 +1,22 @@
+:root {
+  --bg-main: #1F2618;
+  --bg-secondary: #2B3320;
+  --bg-card: #3A2418;
+  --bg-dark: #24150F;
+
+  --accent: #6F7F3A;
+  --gold: #C5A85A;
+
+  --text-main: #F5F0E6;
+  --text-muted: #C9C0AD;
+
+  --border: rgba(197, 168, 90, 0.15);
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg-main);
+  color: var(--text-main);
+}

@@ -1,0 +1,135 @@
+.admin-dashboard {
+min-height: 100vh;
+background: #0f172a;
+color: white;
+padding-bottom: 60px;
+}
+
+/* HEADER */
+
+.admin-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 30px 6%;
+background: #111827;
+border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.admin-header h1 {
+margin: 0;
+font-size: 2rem;
+font-weight: 700;
+}
+
+.admin-header p {
+margin: 5px 0 0;
+color: #94a3b8;
+}
+
+/* LOGOUT */
+
+.logout-button {
+border: none;
+background: #dc2626;
+color: white;
+padding: 10px 20px;
+border-radius: 8px;
+font-weight: 600;
+cursor: pointer;
+transition: 0.2s ease;
+}
+
+.logout-button:hover {
+background: #b91c1c;
+transform: translateY(-1px);
+}
+
+/* MAIN CONTENT */
+
+.admin-content {
+width: 90%;
+max-width: 1200px;
+margin: 40px auto;
+}
+
+/* SECTIONS */
+
+.admin-section {
+background: #111827;
+border: 1px solid rgba(255, 255, 255, 0.07);
+border-radius: 18px;
+padding: 30px;
+margin-bottom: 30px;
+box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* FORM ELEMENTS */
+
+.admin-section input,
+.admin-section textarea,
+.admin-section select {
+background: #1e293b;
+color: white;
+border: 1px solid #334155;
+border-radius: 8px;
+padding: 12px;
+width: 100%;
+margin-bottom: 15px;
+outline: none;
+}
+
+.admin-section input:focus,
+.admin-section textarea:focus,
+.admin-section select:focus {
+border-color: #3b82f6;
+}
+
+/* BUTTONS */
+
+.admin-section button {
+border: none;
+border-radius: 8px;
+padding: 10px 18px;
+font-weight: 600;
+cursor: pointer;
+}
+
+/* LOADING */
+
+.admin-loading {
+min-height: 100vh;
+display: flex;
+justify-content: center;
+align-items: center;
+background: #0f172a;
+color: white;
+font-size: 1.1rem;
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+.admin-header {
+padding: 25px 20px;
+}
+
+.admin-header h1 {
+font-size: 1.5rem;
+}
+
+.admin-content {
+width: 94%;
+margin: 25px auto;
+}
+
+.admin-section {
+padding: 20px;
+}
+
+.logout-button {
+padding: 8px 14px;
+}
+
+}
