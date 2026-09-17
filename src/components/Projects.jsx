@@ -11,6 +11,17 @@ export default function Projects() {
 
   const [activeCategory, setActiveCategory] = useState("All");
 
+  // Supports both Cloudinary URLs and old local uploads
+  const getFileUrl = (file) => {
+    if (!file) return null;
+
+    if (file.startsWith("http")) {
+      return file;
+    }
+
+    return `${import.meta.env.VITE_API_URL}/uploads/${file}`;
+  };
+
   const fetchProjects = async () => {
     try {
       const response = await fetch(
@@ -60,41 +71,41 @@ export default function Projects() {
   };
 
   const downloadImage = async () => {
-  const project = filteredProjects[currentIndex];
+    const project = filteredProjects[currentIndex];
 
-  if (!project?.image) return;
+    if (!project?.image) return;
 
-  try {
-    const imageUrl = `${import.meta.env.VITE_API_URL}/uploads/${project.image}`;
+    try {
+      const imageUrl = getFileUrl(project.image);
 
-    const response = await fetch(imageUrl);
+      const response = await fetch(imageUrl);
 
-    if (!response.ok) {
-      throw new Error("Failed to fetch image");
+      if (!response.ok) {
+        throw new Error("Failed to fetch image");
+      }
+
+      const blob = await response.blob();
+
+      const blobUrl = window.URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = project.title || "project-image";
+
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      window.URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      console.error("Image download failed:", error);
     }
-
-    const blob = await response.blob();
-
-    const blobUrl = window.URL.createObjectURL(blob);
-
-    const link = document.createElement("a");
-    link.href = blobUrl;
-    link.download = project.title || "project-image";
-
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-
-    window.URL.revokeObjectURL(blobUrl);
-  } catch (error) {
-    console.error("Image download failed:", error);
-  }
-};
+  };
 
   const openDocument = (project) => {
     if (!project?.document) return;
 
-    const documentUrl = `${import.meta.env.VITE_API_URL}/uploads/${project.document}`;
+    const documentUrl = getFileUrl(project.document);
 
     window.open(documentUrl, "_blank", "noopener,noreferrer");
   };
@@ -102,12 +113,19 @@ export default function Projects() {
   const downloadDocument = (project) => {
     if (!project?.document) return;
 
+    const documentUrl = getFileUrl(project.document);
+
     const link = document.createElement("a");
 
-    link.href = `${import.meta.env.VITE_API_URL}/uploads/${project.document}`;
-    link.download = project.document;
+    link.href = documentUrl;
+    link.download = project.document.split("/").pop();
 
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+
+    document.body.appendChild(link);
     link.click();
+    link.remove();
   };
 
   const changeCategory = (category) => {
@@ -121,7 +139,6 @@ export default function Projects() {
   return (
     <section id="projects" className="projects-section">
       <Container>
-
         <h2 className="projects-title">My Projects</h2>
 
         <p className="subtitle">
@@ -131,7 +148,6 @@ export default function Projects() {
         {/* CATEGORY FILTERS */}
 
         <div className="project-filters">
-
           <Button
             className={
               activeCategory === "All"
@@ -175,7 +191,6 @@ export default function Projects() {
           >
             Documents
           </Button>
-
         </div>
 
         {/* PROJECTS */}
@@ -186,29 +201,23 @@ export default function Projects() {
           <p>No projects available in this category.</p>
         ) : (
           <Row className="g-4 mt-4">
-
             {filteredProjects.map((project, index) => (
               <Col md={6} lg={4} key={project.id}>
-
                 <Card
                   className="project-card"
                   onClick={() => openModal(index)}
                 >
-
                   <div className="image-wrapper">
-
                     {project.image && (
                       <Card.Img
-                        src={`${import.meta.env.VITE_API_URL}/uploads/${project.image}`}
+                        src={getFileUrl(project.image)}
                         alt={project.title}
                         className="project-image"
                       />
                     )}
-
                   </div>
 
                   <Card.Body>
-
                     <Card.Title>
                       {project.title}
                     </Card.Title>
@@ -228,7 +237,6 @@ export default function Projects() {
                     </small>
 
                     <div className="mt-3">
-
                       {project.category === "Documents" ? (
                         <>
                           {project.document && (
@@ -284,27 +292,20 @@ export default function Projects() {
                           )}
                         </>
                       )}
-
                     </div>
-
                   </Card.Body>
-
                 </Card>
-
               </Col>
             ))}
-
           </Row>
         )}
 
         {/* DOCUMENT / TYPING SERVICES */}
 
         <Row className="g-4 mt-5">
-
           <Col md={4}>
             <Card className="typing-card">
               <Card.Body>
-
                 <h4 className="typing-title">
                   Fast Typing
                 </h4>
@@ -313,7 +314,6 @@ export default function Projects() {
                   Accurate and fast typing services for documents,
                   assignments, reports, and manuscripts.
                 </p>
-
               </Card.Body>
             </Card>
           </Col>
@@ -321,7 +321,6 @@ export default function Projects() {
           <Col md={4}>
             <Card className="typing-card">
               <Card.Body>
-
                 <h4 className="typing-title">
                   Document Formatting
                 </h4>
@@ -330,7 +329,6 @@ export default function Projects() {
                   Clean and professional formatting for resumes,
                   business documents, and PDFs.
                 </p>
-
               </Card.Body>
             </Card>
           </Col>
@@ -338,7 +336,6 @@ export default function Projects() {
           <Col md={4}>
             <Card className="typing-card">
               <Card.Body>
-
                 <h4 className="typing-title">
                   PDF Conversion
                 </h4>
@@ -347,13 +344,10 @@ export default function Projects() {
                   Convert scanned files and PDFs into editable,
                   organized, and properly formatted documents.
                 </p>
-
               </Card.Body>
             </Card>
           </Col>
-
         </Row>
-
       </Container>
 
       {/* GALLERY MODAL */}
@@ -365,77 +359,67 @@ export default function Projects() {
         size="lg"
         className="gallery-modal"
       >
-
         <Modal.Header closeButton>
-
           <Modal.Title>
             {currentProject?.title}
           </Modal.Title>
-
         </Modal.Header>
 
         <Modal.Body className="text-center modal-body-custom">
-
           {currentProject?.image && (
             <img
-              src={`${import.meta.env.VITE_API_URL}/uploads/${currentProject.image}`}
+              src={getFileUrl(currentProject.image)}
               alt={currentProject.title}
               className="modal-image zoom-animation"
             />
           )}
-
         </Modal.Body>
 
         <Modal.Footer className="gallery-modal-footer">
-
-  <Button
-    variant="secondary"
-    onClick={prevImage}
-  >
-    ⬅ Prev
-  </Button>
-
-  {currentProject?.category === "Documents" ? (
-    <div className="document-modal-actions">
-
-      {currentProject?.document && (
-        <>
           <Button
-            variant="success"
-            onClick={() => openDocument(currentProject)}
+            variant="secondary"
+            onClick={prevImage}
           >
-            📄 View Document
+            ⬅ Prev
           </Button>
+
+          {currentProject?.category === "Documents" ? (
+            <div className="document-modal-actions">
+              {currentProject?.document && (
+                <>
+                  <Button
+                    variant="success"
+                    onClick={() => openDocument(currentProject)}
+                  >
+                    📄 View Document
+                  </Button>
+
+                  <Button
+                    variant="secondary"
+                    onClick={() => downloadDocument(currentProject)}
+                  >
+                    ⬇ Download Document
+                  </Button>
+                </>
+              )}
+            </div>
+          ) : (
+            <Button
+              variant="success"
+              onClick={downloadImage}
+            >
+              ⬇ Download Image
+            </Button>
+          )}
 
           <Button
             variant="secondary"
-            onClick={() => downloadDocument(currentProject)}
+            onClick={nextImage}
           >
-            ⬇ Download Document
+            Next ➡
           </Button>
-        </>
-      )}
-
-    </div>
-  ) : (
-    <Button
-      variant="success"
-      onClick={downloadImage}
-    >
-      ⬇ Download Image
-    </Button>
-  )}
-
-  <Button
-    variant="secondary"
-    onClick={nextImage}
-  >
-    Next ➡
-  </Button>
-
-</Modal.Footer>
+        </Modal.Footer>
       </Modal>
-
     </section>
   );
 }

@@ -6,6 +6,18 @@ function AdminProjects() {
   const [loading, setLoading] = useState(true);
   const [editingProject, setEditingProject] = useState(null);
 
+  const getFileUrl = (file) => {
+    if (!file) return null;
+
+    // Cloudinary URL
+    if (file.startsWith("http")) {
+      return file;
+    }
+
+    // Old locally stored uploads
+    return `${import.meta.env.VITE_API_URL}/uploads/${file}`;
+  };
+
   const fetchProjects = async () => {
     try {
       const response = await fetch(
@@ -35,7 +47,7 @@ function AdminProjects() {
 
     try {
       const response = await fetch(
-       `${import.meta.env.VITE_API_URL}/api/projects/${id}`,
+        `${import.meta.env.VITE_API_URL}/api/projects/${id}`,
         {
           method: "DELETE",
           credentials: "include",
@@ -109,7 +121,7 @@ function AdminProjects() {
 
             {project.image && (
               <img
-                src={`${import.meta.env.VITE_API_URL}/uploads/${project.image}`}
+                src={getFileUrl(project.image)}
                 alt={project.title}
                 width="200"
               />
