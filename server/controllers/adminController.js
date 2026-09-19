@@ -41,12 +41,27 @@ export const login = async (req, res) => {
     );
 
     res.cookie("adminToken", token, {
-  httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
-  sameSite:
-    process.env.NODE_ENV === "production" ? "none" : "strict",
-  maxAge: 24 * 60 * 60 * 1000,
-});
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite:
+        process.env.NODE_ENV === "production" ? "none" : "strict",
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+
+    res.json({
+      success: true,
+      message: "Login successful",
+    });
+
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
 
 export const createAdmin = async (req, res) => {
   try {
