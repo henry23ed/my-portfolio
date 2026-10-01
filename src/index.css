@@ -1,22 +1,70 @@
+/* ==============================
+   FUTURISTIC PORTFOLIO THEME
+============================== */
+
 :root {
-  --bg-main: #1F2618;
-  --bg-secondary: #2B3320;
-  --bg-card: #3A2418;
-  --bg-dark: #24150F;
+  color-scheme: dark;
 
-  --accent: #6F7F3A;
-  --gold: #C5A85A;
+  --bg-main: #080d1b;
+  --bg-secondary: #0f172a;
+  --bg-card: #111b30;
+  --bg-dark: #060a14;
 
-  --text-main: #F5F0E6;
-  --text-muted: #C9C0AD;
+  --accent: #6366f1;
+  --gold: #818cf8;
 
-  --border: rgba(197, 168, 90, 0.15);
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+
+  --border: rgba(129, 140, 248, 0.18);
+
+  --glow: rgba(99, 102, 241, 0.18);
 }
 
-html,
+/* LIGHT MODE */
+
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --bg-main: #f8fafc;
+  --bg-secondary: #eef2ff;
+  --bg-card: #ffffff;
+  --bg-dark: #e2e8f0;
+
+  --accent: #4f46e5;
+  --gold: #6366f1;
+
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+
+  --border: rgba(79, 70, 229, 0.15);
+
+  --glow: rgba(99, 102, 241, 0.08);
+}
+
+/* GLOBAL STYLES */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
 body {
   margin: 0;
   padding: 0;
   background: var(--bg-main);
   color: var(--text-main);
+  font-family: "Inter", sans-serif;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: var(--accent);
+  color: #ffffff;
 }

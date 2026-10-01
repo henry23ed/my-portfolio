@@ -6,12 +6,12 @@ import {
   Offcanvas,
 } from "react-bootstrap";
 import "./MyNavbar.css";
-
+import { useTheme } from "./ThemeContext.jsx";
 export default function PortfolioNavbar({ setPage }) {
   const [showMenu, setShowMenu] = useState(false);
   const [pendingSection, setPendingSection] = useState(null);
   const [navbarVisible, setNavbarVisible] = useState(true);
-
+  const { theme, toggleTheme } = useTheme();
   useEffect(() => {
     let lastScrollY = window.scrollY;
 
@@ -149,6 +149,34 @@ const handleNavClick = (sectionId) => {
             </Nav.Link>
 
             <Nav.Link
+              href="#skills"
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavClick("skills");
+              }}>
+              Skills
+            </Nav.Link>
+
+             <Nav.Link
+              href="#experience"
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavClick("experience");
+              }}>
+              Experience
+            </Nav.Link>
+
+            <Nav.Link
+              href="#services"
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavClick("services");
+              }}
+            >
+              Services
+            </Nav.Link>
+
+            <Nav.Link
               href="#projects"
               onClick={(e) => {
                 e.preventDefault();
@@ -156,6 +184,15 @@ const handleNavClick = (sectionId) => {
               }}
             >
               Projects
+            </Nav.Link>
+
+            <Nav.Link
+              href="#about"
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavClick("about");
+              }}>
+              About
             </Nav.Link>
 
             <Nav.Link
@@ -168,6 +205,18 @@ const handleNavClick = (sectionId) => {
               Contact
             </Nav.Link>
 
+            
+
+              <Nav.Link
+  as="button"
+  onClick={toggleTheme}
+  className="theme-toggle"
+  aria-label={`Switch to ${
+    theme === "dark" ? "light" : "dark"
+  } mode`}
+>
+  {theme === "dark" ? "☀️ Light Mode" : "🌙 Dark Mode"}
+</Nav.Link>
             </Nav>
           </Offcanvas.Body>
         </Navbar.Offcanvas>

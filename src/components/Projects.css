@@ -88,25 +88,49 @@
 ========================= */
 
 .project-card {
-  cursor: pointer;
-  border-radius: 18px;
+  position: relative;
   overflow: hidden;
-
-  background: var(--bg-card);
-  color: var(--text-main);
-
-  border: 1px solid var(--border);
-
+  border-radius: 16px;
   transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+  will-change: transform;
 }
 
 .project-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 15px 35px rgba(197, 168, 90, 0.12);
+  transform: translateY(-8px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+  border-color: rgba(120, 100, 255, 0.5);
 }
 
+.image-wrapper {
+  overflow: hidden;
+}
+
+.project-image {
+  transition: transform 0.5s ease;
+}
+
+.project-card:hover .project-image {
+  transform: scale(1.06);
+}
+
+.project-card .btn {
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.project-card .btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.project-card .btn:focus-visible {
+  outline: 2px solid #9b8cff;
+  outline-offset: 3px;
+}
 
 /* =========================
    PROJECT IMAGE
@@ -324,4 +348,36 @@
   .document-modal-actions .btn {
     min-width: 140px;
   }
+}
+
+/* DARK MODE — default */
+.project-card {
+  background-color: #161b2e;
+  color: #f1f5f9;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Dark mode card text */
+.project-card .card-title,
+.project-card h3,
+.project-card h4,
+.project-card p,
+.project-card .card-text {
+  color: #f1f5f9;
+}
+
+/* LIGHT MODE */
+:root[data-theme="light"] .project-card {
+  background-color: #ffffff;
+  color: #1e293b;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* Light mode card text */
+:root[data-theme="light"] .project-card .card-title,
+:root[data-theme="light"] .project-card h3,
+:root[data-theme="light"] .project-card h4,
+:root[data-theme="light"] .project-card p,
+:root[data-theme="light"] .project-card .card-text {
+  color: #1e293b;
 }
